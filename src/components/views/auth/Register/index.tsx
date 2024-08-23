@@ -5,6 +5,9 @@ import { FormEvent } from 'react'
 import { useState } from 'react'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
+import authService from '@/services/auth'
+import AuthLayout from '@/components/layouts/AuthLayout'
+
 
 const RegisterView = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -22,13 +25,7 @@ const RegisterView = () => {
             password: form.password.value
         }
 
-        const result = await fetch('/api/user/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
+        const result = await authService.registerAccount(data)
 
         if (result.status === 200) {
             form.reset()
@@ -42,20 +39,16 @@ const RegisterView = () => {
     }
 
     return (
-        <div className={styles.register}>
-            <h1 className={styles.register__title}>Register</h1>
-            {error && <p className={styles.register__error}>{error}</p>}
-            <div className={styles.register__form}>
-                <form action="" onSubmit={handleSubmit}>
-                    <Input label='Email' name='email' type='email' />
-                    <Input label='Fullname' name='fullname' type='text' />
-                    <Input label='Phone' name='phone' type='number' />
-                    <Input label='Password' name='password' type='password' />
-                    <Button type='submit' className={styles.register__form__button}>{isLoading ? 'Loading...' : 'Register'}</Button>
-                </form>
-            </div>
-            <p className={styles.register__link}>Have an acoount? Sign In <Link href="/auth/login">here</Link></p>
-        </div>
+        <AuthLayout title='Register' error={error} link='/auth/login' linkText='Already have an account? Sign In '>
+            <form action="" onSubmit={handleSubmit}>
+                <Input label='Email' name='email' type='email' />
+                <Input label='Fullname' name='fullname' type='text' />
+                <Input label='Phone' name='phone' type='number' />
+                <Input label='Password' name='password' type='password' />
+                <Button type='submit' className={styles.register__button}>{isLoading ? 'Loading...' : 'Register'}</Button>
+            </form>
+        </AuthLayout>
+
     )
 }
 
