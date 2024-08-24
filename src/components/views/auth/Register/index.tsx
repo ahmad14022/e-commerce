@@ -5,7 +5,7 @@ import { FormEvent } from 'react'
 import { useState } from 'react'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import authService from '@/services/auth'
+import authServices from '@/services/auth'
 import AuthLayout from '@/components/layouts/AuthLayout'
 
 
@@ -25,7 +25,7 @@ const RegisterView = () => {
             password: form.password.value
         }
 
-        const result = await authService.registerAccount(data)
+        const result = await authServices.registerAccount(data)
 
         if (result.status === 200) {
             form.reset()
