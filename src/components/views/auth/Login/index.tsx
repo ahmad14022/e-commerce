@@ -41,7 +41,7 @@ const LoginView = () => {
     }
 
     return (
-        <AuthLayout title="Login" link='/auth/register' linkText="Don't Have an acoount? Sign Up ">
+        <AuthLayout title="Login" link='/auth/register' linkText="Don't Have an acoount? Sign Up " error={error}>
             <form action="" onSubmit={handleSubmit}>
                 <Input label='Email' name='email' type='email' />
                 <Input label='Password' name='password' type='password' />
